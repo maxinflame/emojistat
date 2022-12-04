@@ -26,6 +26,7 @@ const writeEmojiesInTable = (emojiesArray) => {
     });
 
     setTableUpdates(topTenEmojies);
+    drawDiagrams(topTenEmojies);
 }
 
 const setTableUpdates = (topTenEmojies) => {
@@ -57,3 +58,26 @@ const updateTable = (updatesObject, topTenEmojiesID) => {
 document.addEventListener('DOMContentLoaded', () => {
     createTable();
 })
+
+const drawDiagrams = (emojiesArray) => {
+    const diagramsWrapper = document.querySelector('[data-diagram="wrapper"]');
+
+    const highestScore = emojiesArray[0].score
+
+    emojiesArray.forEach(emoji => {
+        const diagramWrapper = document.createElement('div');
+        diagramWrapper.classList.add('diagram-wrapper');
+
+        const diagram = document.createElement('div');
+        diagram.classList.add('diagram');
+        diagram.style.height = `${(emoji.score / highestScore) * 100}%`;
+        diagramWrapper.append(diagram);
+
+        const diagramName = document.createElement('span');
+        diagramName.innerText = emoji.char;
+        diagramWrapper.append(diagramName);
+
+        diagramsWrapper.append(diagramWrapper);
+
+    })
+}
